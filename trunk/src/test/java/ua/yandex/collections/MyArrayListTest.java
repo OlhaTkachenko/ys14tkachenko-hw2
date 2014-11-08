@@ -81,12 +81,24 @@ public class MyArrayListTest {
     }
 
     @Test
-    public void testAddAllWithEnsureCapacity_int_Object() {
+    public void testAddAllWithEnsureCapacity_Object() {
         System.out.println("add");
         Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         MyArrayList instance = new MyArrayList();
         instance.addAll(array);
         instance.addAll(array);
+        Object[] expectedResult = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        Object[] actualResult = instance.toArray();
+        assertArrayEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testAddAllWithEnsureCapacity_int_Object() {
+        System.out.println("add");
+        Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        MyArrayList instance = new MyArrayList();
+        instance.addAll(array);
+        instance.addAll(10, array);
         Object[] expectedResult = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         Object[] actualResult = instance.toArray();
         assertArrayEquals(expectedResult, actualResult);
@@ -272,7 +284,8 @@ public class MyArrayListTest {
         System.out.println("toString");
         MyArrayList instance = new MyArrayList();
         instance.add("hh");
-        String expResult = "hh";
+        instance.add("hh");
+        String expResult = "hh,hh";
         String result = instance.toString();
         assertEquals(expResult, result);
     }

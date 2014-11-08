@@ -148,6 +148,18 @@ public class MyCollectionsTest {
     }
 
     @Test
+    public void testBinarySearchFindInBegining_4args() {
+        System.out.println("binarySearch");
+        MyList list = new MyLinkedList();
+        Object key = 3;
+        Object[] array = {2, 3, 4, 5, 6, 7, 8, 9};
+        list.addAll(array);
+        int expResult = 1;
+        int result = MyCollections.binarySearch(list, key);
+        assertEquals(expResult, result);
+    }
+
+    @Test
     public void testBinarySearchNotFind_3args() {
         System.out.println("binarySearch");
         MyList list = new MyLinkedList();
