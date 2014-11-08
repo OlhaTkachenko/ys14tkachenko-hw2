@@ -5,6 +5,12 @@ public class MyLinkedList implements MyList {
     private Node head;
     private Node tail;
 
+    MyLinkedList() {
+        head = new Node();
+        tail = head;
+        head.data = null;
+    }
+
     static private class Node {
 
         private Node next;
@@ -14,12 +20,6 @@ public class MyLinkedList implements MyList {
         Node() {
             data = new Object();
         }
-    }
-
-    MyLinkedList() {
-        head = new Node();
-        tail = head;
-        head.data = null;
     }
 
     @Override
