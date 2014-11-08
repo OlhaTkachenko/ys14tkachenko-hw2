@@ -460,6 +460,20 @@ public class MyLinkedListTest {
         assertArrayEquals(expectedResult, actualResult);
     }
 
+    @Test
+    public void testAddAllInTheEnd_int_ObjectArrInTheBegining() {
+        System.out.println("addAll");
+        MyLinkedList instance = new MyLinkedList();
+        int index = 2;
+        instance.add(4);
+        instance.add(4);
+        Object[] c = {1, 2, 3};
+        instance.addAll(index, c);
+        Object[] expectedResult = {4, 4, 1, 2, 3};
+        Object[] actualResult = instance.toArray();
+        assertArrayEquals(expectedResult, actualResult);
+    }
+
     @Test(expected = MyException.class)
     public void testcheckBorderForAdd() {
         System.out.println("toArray");

@@ -4,11 +4,6 @@ public class MyArrayList implements MyList {
 
     private static final int DEFAULT_CAPACITY = 10;
     private static final int DEFAULT_INCREASE = 1;
-    private Object[] arrayList;
-    private int size;
-    public int arrayListMaxSize(){
-        return arrayList.length;
-    }
 
     public MyArrayList() {
         arrayList = new Object[DEFAULT_CAPACITY];
@@ -18,6 +13,12 @@ public class MyArrayList implements MyList {
     public MyArrayList(int initialCapacity) {
         arrayList = new Object[initialCapacity];
         size = 0;
+    }
+    private Object[] arrayList;
+    private int size;
+
+    public int arrayListMaxSize() {
+        return arrayList.length;
     }
 
     public void ensureCapacity(int newCapacity) {
@@ -129,14 +130,14 @@ public class MyArrayList implements MyList {
 
     @Override
     public String toString() {
-        String s = new String();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            s += arrayList[i];
+            buf.append(arrayList[i]);
             if (i < size - 1) {
-                s += ',';
+                buf.append(',');
             }
         }
-        return s;
+        return buf.toString();
     }
 
     public void checkBorderForAdd(int index) {

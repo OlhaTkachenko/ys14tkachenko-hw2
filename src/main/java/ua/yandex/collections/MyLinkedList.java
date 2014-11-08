@@ -2,7 +2,7 @@ package ua.yandex.collections;
 
 public class MyLinkedList implements MyList {
 
-    private class Node {
+    static private class Node {
 
         private Node next;
         private Node last;
@@ -140,16 +140,16 @@ public class MyLinkedList implements MyList {
 
     @Override
     public String toString() {
-        String s = new String();
+        StringBuilder buf = new StringBuilder();
         Node temp = head;
         for (int i = 0; i < size(); i++) {
-            s += temp.data;
+            buf.append(temp.data);
             if (i < size() - 1) {
-                s += ',';
+                buf.append(',');
             }
             temp = temp.next;
         }
-        return s;
+        return buf.toString();
     }
 
     public Object removeFirst() {
@@ -228,7 +228,7 @@ public class MyLinkedList implements MyList {
             Node now = new Node();
             now.data = c[0];
             head = now;
-            for (int i=1; i < c.length; i++) {
+            for (int i = 1; i < c.length; i++) {
                 Node temp = new Node();
                 temp.last = now;
                 now.next = temp;
@@ -237,7 +237,7 @@ public class MyLinkedList implements MyList {
             }
             now.next = oldHead;
             oldHead.last = now;
-            return ;
+            return;
         }
         Node placeWhereAdd = head;
         for (int i = 1; i < index; i++) {
