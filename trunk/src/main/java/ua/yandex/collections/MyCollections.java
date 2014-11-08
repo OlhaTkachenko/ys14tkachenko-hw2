@@ -22,7 +22,8 @@ public class MyCollections {
         return binarySearch(list, key, 0, list.size() - 1);
     }
 
-    public static int binarySearch(MyList list, Object key, int indexOfBegin, int indexOfEnd) {
+    public static int binarySearch(MyList list, Object key,
+            int indexOfBegin, int indexOfEnd) {
         if (indexOfBegin == indexOfEnd) {
             if (((Comparable) list.get(indexOfBegin)).compareTo(key) > 0) {
                 return -indexOfBegin - 1;
@@ -51,7 +52,8 @@ public class MyCollections {
         return binarySearch(list, key, cp, 0, list.size() - 1);
     }
 
-    public static int binarySearch(MyList list, Object key, Comparator cp, int indexOfBegin, int indexOfEnd) {
+    public static int binarySearch(MyList list, Object key, Comparator cp,
+            int indexOfBegin, int indexOfEnd) {
         if (indexOfBegin == indexOfEnd) {
             if (cp.compare(list.get(indexOfBegin), key) > 0) {
                 return -indexOfBegin - 1;
