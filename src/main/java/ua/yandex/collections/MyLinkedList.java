@@ -228,7 +228,7 @@ public class MyLinkedList implements MyList {
             Node now = new Node();
             now.data = c[0];
             head = now;
-            for (int i = 1; i < c.length; i++) {
+            for(int i = 1; i < c.length; i++){
                 Node temp = new Node();
                 temp.last = now;
                 now.next = temp;

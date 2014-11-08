@@ -73,9 +73,11 @@ public class MyArrayListTest {
         System.out.println("add");
         Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         MyArrayList instance = new MyArrayList();
-        instance.addAll(array);
-        instance.add(1, '2');
-        Object[] expectedResult = {1, '2', 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        instance.add(0);
+        instance.add(11);
+        instance.addAll(1,array);
+        instance.add(2, '2');
+        Object[] expectedResult = {0, 1, '2', 2, 3, 4, 5, 6, 7, 8, 9, 10,11};
         Object[] actualResult = instance.toArray();
         assertArrayEquals(expectedResult, actualResult);
     }
