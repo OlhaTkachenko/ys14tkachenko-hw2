@@ -2,6 +2,9 @@ package ua.yandex.collections;
 
 public class MyLinkedList implements MyList {
 
+    private Node head;
+    private Node tail;
+
     static private class Node {
 
         private Node next;
@@ -12,9 +15,6 @@ public class MyLinkedList implements MyList {
             data = new Object();
         }
     }
-
-    private Node head;
-    private Node tail;
 
     MyLinkedList() {
         head = new Node();
@@ -228,7 +228,7 @@ public class MyLinkedList implements MyList {
             Node now = new Node();
             now.data = c[0];
             head = now;
-            for(int i = 1; i < c.length; i++){
+            for (int i = 1; i < c.length; i++) {
                 Node temp = new Node();
                 temp.last = now;
                 now.next = temp;
