@@ -3,9 +3,12 @@ package ua.yandex.collections;
 public class MyArrayList implements MyList {
 
     private static final int DEFAULT_CAPACITY = 10;
-    private static final int DEFAULT_INCREASE = 5;
-    Object[] arrayList;
+    private static final int DEFAULT_INCREASE = 1;
+    private Object[] arrayList;
     private int size;
+    public int arrayListMaxSize(){
+        return arrayList.length;
+    }
 
     public MyArrayList() {
         arrayList = new Object[DEFAULT_CAPACITY];
@@ -35,18 +38,15 @@ public class MyArrayList implements MyList {
 
     @Override
     public void add(int index, Object e) {
-        size++;
-        if (size < index || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        } else {
-            if (size > arrayList.length) {
-                ensureCapacity(size);
-            }
-            for (int ind = size; ind >= index; ind--) {
-                arrayList[ind] = arrayList[ind - 1];
-            }
-            arrayList[index] = e;
+        checkBorderForAdd(index);
+        if (size == arrayList.length) {
+            ensureCapacity(size + DEFAULT_INCREASE);
         }
+        size++;
+        for (int ind = size - 1; ind >= index; ind--) {
+            arrayList[ind] = arrayList[ind - 1];
+        }
+        arrayList[index] = e;
     }
 
     @Override
@@ -58,13 +58,11 @@ public class MyArrayList implements MyList {
 
     @Override
     public void addAll(int index, Object[] c) {
-        if (size + 1 < index || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
-        if (size == arrayList.length) {
+        checkBorderForAdd(index);
+        if (size + c.length > arrayList.length) {
             ensureCapacity(size + c.length);
         }
-        for (int ind = size; ind >= index; ind--) {
+        for (int ind = size - 1; ind >= index; ind--) {
             arrayList[ind + c.length] = arrayList[ind];
         }
         System.arraycopy(c, 0, arrayList, index, c.length);
@@ -73,41 +71,32 @@ public class MyArrayList implements MyList {
 
     @Override
     public Object get(int index) {
-        if (size < index || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        } else {
-            return arrayList[index];
-        }
+        checkBorderForAccess(index);
+        return arrayList[index];
     }
 
     @Override
     public Object remove(int index) {
-        if (size < index || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        } else {
-            Object result = get(index);
-            for (int ind = index; ind < size; ind++) {
-                arrayList[ind - 1] = arrayList[ind];
-            }
-            size--;
-            ensureCapacity(size);
-            return result;
+        checkBorderForAccess(index);
+        Object result = get(index);
+        for (int ind = index; ind < size; ind++) {
+            arrayList[ind - 1] = arrayList[ind];
         }
+        size--;
+        ensureCapacity(size);
+        return result;
     }
 
     @Override
     public void set(int index, Object e) {
-        if (this.size + 1 >= index && index >= 0) {
-            arrayList[index] = e;
-        } else {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(index);
+        arrayList[index] = e;
+
     }
 
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < size; i++) {
-            i++;
             if (arrayList[i] == o) {
                 return i;
             }
@@ -150,4 +139,15 @@ public class MyArrayList implements MyList {
         return s;
     }
 
+    public void checkBorderForAdd(int index) {
+        if (size < index || index < 0) {
+            throw new MyException("ReferenceToUncreatedElement");
+        }
+    }
+
+    public void checkBorderForAccess(int index) {
+        if (size <= index || index < 0) {
+            throw new MyException("ReferenceToUncreatedElement");
+        }
+    }
 }

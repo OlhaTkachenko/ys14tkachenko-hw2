@@ -77,6 +77,16 @@ public class MyCollectionsTest {
     }
 
     @Test
+    public void testBinarySearchEmpty_MyList_Object() {
+        System.out.println("binarySearch");
+        MyList list = new MyLinkedList();
+        Object key = 2;
+        int expResult = -1;
+        int result = MyCollections.binarySearch(list, key);
+        assertEquals(expResult, result);
+    }
+
+    @Test
     public void testBinarySearchNotFindInTheEnd_MyList_Object() {
         System.out.println("binarySearch");
         MyList list = new MyLinkedList();
@@ -92,22 +102,10 @@ public class MyCollectionsTest {
     public void testBinarySearchFind_MyList_Object() {
         System.out.println("binarySearch");
         MyList list = new MyLinkedList();
-        Object key = 2;
+        Object key = 3;
         Object[] array = {1, 2, 3, 4, 50};
         list.addAll(array);
-        int expResult = 1;
-        int result = MyCollections.binarySearch(list, key);
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testBinarySearchEmpty_MyList_Object() {
-        System.out.println("binarySearch");
-        MyList list = new MyArrayList();
-        Object key = 2;
-        Object[] array = {1, 2, 3, 4, 50};
-        list.addAll(array);
-        int expResult = 1;
+        int expResult = 2;
         int result = MyCollections.binarySearch(list, key);
         assertEquals(expResult, result);
     }
@@ -174,6 +172,30 @@ public class MyCollectionsTest {
         int indexOfEnd = 6;
         int expResult = 2;
         int result = MyCollections.binarySearch(list, key, cp, indexOfBegin, indexOfEnd);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testBinarySearchIsEmpty_3args() {
+        System.out.println("binarySearch");
+        MyList list = new MyArrayList();
+        Object key = 3;
+        MyComparator cp = new MyComparator();
+        int expResult = -1;
+        int result = MyCollections.binarySearch(list, key, cp);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testBinarySearchNotFindInTheEnd_3argsMyList_Object() {
+        System.out.println("binarySearch");
+        MyList list = new MyLinkedList();
+        Object key = 100;
+        Object[] array = {1, 2, 3, 4, 50};
+        MyComparator cp = new MyComparator();
+        list.addAll(array);
+        int expResult = -6;
+        int result = MyCollections.binarySearch(list, key, cp);
         assertEquals(expResult, result);
     }
 

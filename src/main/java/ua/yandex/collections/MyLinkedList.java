@@ -1,23 +1,20 @@
 package ua.yandex.collections;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class MyLinkedList implements MyList {
 
-    class Node {
+    private class Node {
 
-        Node next;
-        Node last;
-        Object data;
+        private Node next;
+        private Node last;
+        private Object data;
 
         Node() {
             data = new Object();
         }
     }
 
-    Node head;
-    Node tail;
+    private Node head;
+    private Node tail;
 
     MyLinkedList() {
         head = new Node();
@@ -40,9 +37,7 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void add(int index, Object e) {
-        if (this.size() < index || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAdd(index);
         if (index == 0) {
             this.addFirst(e);
             return;
@@ -51,15 +46,15 @@ public class MyLinkedList implements MyList {
             this.addLast(e);
             return;
         }
-        Node temp = head;
+        Node placeWhereAdd = head;
         for (int i = 1; i < index; i++) {
-            temp = temp.next;
+            placeWhereAdd = placeWhereAdd.next;
         }
-        Node temp1 = new Node();
-        temp1.last = temp;
-        temp1.next = temp.next;
-        temp1.data = e;
-        temp.next = temp1;
+        Node temp = new Node();
+        temp.last = placeWhereAdd;
+        temp.next = placeWhereAdd.next;
+        temp.data = e;
+        placeWhereAdd.next = temp;
     }
 
     public void addFirst(Object e) {
@@ -77,7 +72,7 @@ public class MyLinkedList implements MyList {
     }
 
     public void addLast(Object e) {
-        this.add(e);
+        add(e);
     }
 
     @Override
@@ -95,24 +90,18 @@ public class MyLinkedList implements MyList {
     }
 
     public Object getFirst() {
-        if (head.data == null) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(0);
         return head.data;
     }
 
     public Object getLast() {
-        if (head.data == null) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(0);
         return tail.data;
     }
 
     @Override
     public Object get(int index) {
-        if (this.size() - 1 < index || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(index);
         if (index == 0) {
             return getFirst();
         }
@@ -164,9 +153,7 @@ public class MyLinkedList implements MyList {
     }
 
     public Object removeFirst() {
-        if (head.data == null) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(0);
         Object temp = head.data;
         head = head.next;
         head.last = null;
@@ -175,9 +162,7 @@ public class MyLinkedList implements MyList {
     }
 
     public Object removeLast() {
-        if (head.data == null) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(0);
         Object temp = tail.data;
         tail = tail.last;
         tail.next = null;
@@ -186,9 +171,7 @@ public class MyLinkedList implements MyList {
 
     @Override
     public Object remove(int index) {
-        if (index >= size() || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(index);
         if (index == 0) {
             return removeFirst();
         }
@@ -206,9 +189,7 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void set(int index, Object e) {
-        if (index >= this.size() || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAccess(index);
         Node temp = head;
         for (int i = 0; i < index; i++) {
             temp = temp.next;
@@ -237,29 +218,52 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void addAll(int index, Object[] c) {
-        if (index > this.size() || index < 0) {
-            throw new MyException("ReferenceToUncreatedElement");
-        }
+        checkBorderForAdd(index);
         if (index == size()) {
             addAll(c);
             return;
         }
-        Node temp = head;
-        for (int i = 1; i < index; i++) {
-            temp = temp.next;
-        }
-        Node twoPart = temp.next;
         if (index == 0) {
-            twoPart = head;
+            Node oldHead = head;
+            Node now = new Node();
+            now.data = c[0];
+            head = now;
+            for (int i=1; i < c.length; i++) {
+                Node temp = new Node();
+                temp.last = now;
+                now.next = temp;
+                temp.data = c[i];
+                now = temp;
+            }
+            now.next = oldHead;
+            oldHead.last = now;
+            return ;
         }
-        for (Object c1 : c) {
-            Node temp1 = new Node();
-            temp1.last = temp;
-            temp.next = temp1;
-            temp1.data = c1;
-            temp = temp1;
+        Node placeWhereAdd = head;
+        for (int i = 1; i < index; i++) {
+            placeWhereAdd = placeWhereAdd.next;
         }
-        temp.next = twoPart;
-        twoPart.last = temp;
+        Node twoPart = placeWhereAdd.next;
+        for (Object addNow : c) {
+            Node temp = new Node();
+            temp.last = placeWhereAdd;
+            placeWhereAdd.next = temp;
+            temp.data = addNow;
+            placeWhereAdd = temp;
+        }
+        placeWhereAdd.next = twoPart;
+        twoPart.last = placeWhereAdd;
+    }
+
+    public void checkBorderForAdd(int index) {
+        if (size() < index || index < 0) {
+            throw new MyException("ReferenceToUncreatedElement");
+        }
+    }
+
+    public void checkBorderForAccess(int index) {
+        if (size() <= index || index < 0) {
+            throw new MyException("ReferenceToUncreatedElement");
+        }
     }
 }

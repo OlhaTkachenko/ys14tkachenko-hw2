@@ -78,13 +78,15 @@ public class MyLinkedListTest {
     @Test
     public void testAddInMiddle_int_Object() {
 
-        int index = 1;
+        int index = 3;
         Object e = 5;
         MyLinkedList instance = new MyLinkedList();
         instance.add(1);
         instance.add(1);
+        instance.add(1);
+        instance.add(1);
         instance.add(index, e);
-        Object[] expectedResult = {1, 5, 1};
+        Object[] expectedResult = {1, 1, 1, 5, 1};
         Object[] actualResult = instance.toArray();
         assertArrayEquals(expectedResult, actualResult);
     }
@@ -382,6 +384,7 @@ public class MyLinkedListTest {
         assertEquals(expResult, result);
     }
 
+    @Test
     public void testIndexOfNotFind() {
         System.out.println("indexOf");
         MyLinkedList instance = new MyLinkedList();
@@ -417,12 +420,14 @@ public class MyLinkedListTest {
     public void testAddAll_int_ObjectArrInTheEnd() {
         System.out.println("addAll");
         MyLinkedList instance = new MyLinkedList();
-        int index = 2;
+        int index = 3;
+        instance.add(4);
+        instance.add(4);
         instance.add(4);
         instance.add(4);
         Object[] c = {1, 2, 3};
         instance.addAll(index, c);
-        Object[] expectedResult = {4, 4, 1, 2, 3};
+        Object[] expectedResult = {4, 4, 4, 1, 2, 3, 4};
         Object[] actualResult = instance.toArray();
         assertArrayEquals(expectedResult, actualResult);
     }
@@ -439,5 +444,37 @@ public class MyLinkedListTest {
         Object[] expectedResult = {4, 1, 2, 3, 4};
         Object[] actualResult = instance.toArray();
         assertArrayEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testAddAll_int_ObjectArrInTheBegining() {
+        System.out.println("addAll");
+        MyLinkedList instance = new MyLinkedList();
+        int index = 0;
+        instance.add(4);
+        instance.add(4);
+        Object[] c = {1, 2, 3};
+        instance.addAll(index, c);
+        Object[] expectedResult = {1, 2, 3, 4, 4};
+        Object[] actualResult = instance.toArray();
+        assertArrayEquals(expectedResult, actualResult);
+    }
+
+    @Test(expected = MyException.class)
+    public void testcheckBorderForAdd() {
+        System.out.println("toArray");
+        MyLinkedList instance = new MyLinkedList();
+        instance.add(3);
+        instance.add(3);
+        instance.checkBorderForAdd(3);
+    }
+
+    @Test(expected = MyException.class)
+    public void testcheckBorderForAccess() {
+        System.out.println("toArray");
+        MyArrayList instance = new MyArrayList();
+        instance.add(3);
+        instance.add(3);
+        instance.checkBorderForAccess(2);
     }
 }

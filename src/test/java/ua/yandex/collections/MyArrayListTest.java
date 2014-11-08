@@ -29,24 +29,33 @@ public class MyArrayListTest {
     }
 
     @Test
+    public void testMyArrayList() {
+        System.out.println("MyArrayList");
+        MyArrayList instance = new MyArrayList(5);
+        int expResult = 5;
+        int result = instance.arrayListMaxSize();
+        assertEquals(expResult, result);
+    }
+
+    @Test
     public void testEnsureCapacity() {
         System.out.println("ensureCapacity");
         int newCapacity = 5;
         MyArrayList instance = new MyArrayList();
         instance.ensureCapacity(newCapacity);
         int expResult = 5;
-        int result = instance.arrayList.length;
+        int result = instance.arrayListMaxSize();
         assertEquals(expResult, result);
     }
 
     @Test
     public void testAdd_Object() {
         System.out.println("add");
-        Object e = 2;
+        Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         MyArrayList instance = new MyArrayList();
-        instance.add(e);
-        instance.add(e);
-        Object[] expectedResult = {2, 2};
+        instance.addAll(array);
+        instance.add(4);
+        Object[] expectedResult = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 4};
         Object[] actualResult = instance.toArray();
         assertArrayEquals(expectedResult, actualResult);
     }
@@ -56,17 +65,29 @@ public class MyArrayListTest {
         System.out.println("AddException");
         MyArrayList instance = new MyArrayList();
         instance.add(1);
-        instance.add(6, 2);
+        instance.add(2, 2);
     }
 
     @Test
     public void testAdd_int_Object() {
         System.out.println("add");
+        Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         MyArrayList instance = new MyArrayList();
-        instance.add('1');
-        instance.add('3');
+        instance.addAll(array);
         instance.add(1, '2');
-        Object[] expectedResult = {'1', '2', '3'};
+        Object[] expectedResult = {1, '2', 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        Object[] actualResult = instance.toArray();
+        assertArrayEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testAddAllWithEnsureCapacity_int_Object() {
+        System.out.println("add");
+        Object[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        MyArrayList instance = new MyArrayList();
+        instance.addAll(array);
+        instance.addAll(array);
+        Object[] expectedResult = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         Object[] actualResult = instance.toArray();
         assertArrayEquals(expectedResult, actualResult);
     }
@@ -162,6 +183,14 @@ public class MyArrayListTest {
         assertArrayEquals(expectedResult, actualResult);
     }
 
+    @Test(expected = MyException.class)
+    public void testSetExeception() {
+        System.out.println("SetExeception");
+        MyArrayList instance = new MyArrayList();
+        instance.add(2);
+        instance.set(1, '4');
+    }
+
     @Test
     public void testIndexOf() {
         System.out.println("indexOf");
@@ -246,5 +275,23 @@ public class MyArrayListTest {
         String expResult = "hh";
         String result = instance.toString();
         assertEquals(expResult, result);
+    }
+
+    @Test(expected = MyException.class)
+    public void testcheckBorderForAdd() {
+        System.out.println("toArray");
+        MyArrayList instance = new MyArrayList();
+        instance.add(3);
+        instance.add(3);
+        instance.checkBorderForAdd(3);
+    }
+
+    @Test(expected = MyException.class)
+    public void testcheckBorderForAccess() {
+        System.out.println("toArray");
+        MyArrayList instance = new MyArrayList();
+        instance.add(3);
+        instance.add(3);
+        instance.checkBorderForAccess(2);
     }
 }
