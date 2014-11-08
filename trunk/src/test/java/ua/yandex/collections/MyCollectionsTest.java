@@ -114,10 +114,10 @@ public class MyCollectionsTest {
     public void testBinarySearch_4args() {
         System.out.println("binarySearch");
         MyList list = new MyArrayList();
-        Object key = 2;
+        Object key = 3;
         Object[] array = {1, 2, 3, 4, 50};
         list.addAll(array);
-        int expResult = 1;
+        int expResult = 2;
         int result = MyCollections.binarySearch(list, key, 0, list.size() - 1);
         assertEquals(expResult, result);
     }
