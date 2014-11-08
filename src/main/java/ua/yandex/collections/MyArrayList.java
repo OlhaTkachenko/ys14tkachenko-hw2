@@ -2,7 +2,11 @@ package ua.yandex.collections;
 
 public class MyArrayList implements MyList {
 
-    
+    private static final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_INCREASE = 1;
+    private Object[] arrayList;
+    private int size;
+
     public MyArrayList() {
         arrayList = new Object[DEFAULT_CAPACITY];
         size = 0;
@@ -146,9 +150,5 @@ public class MyArrayList implements MyList {
         if (size <= index || index < 0) {
             throw new MyException("ReferenceToUncreatedElement");
         }
-    } 
-    private static final int DEFAULT_CAPACITY = 10;
-    private static final int DEFAULT_INCREASE = 1;
-    private Object[] arrayList;
-    private int size;
+    }
 }
